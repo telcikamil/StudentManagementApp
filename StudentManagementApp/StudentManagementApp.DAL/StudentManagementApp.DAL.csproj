@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Entity_Configurations\" />
-    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentManagementApp.Model\StudentManagementApp.Model.csproj" />
   </ItemGroup>
 
 </Project>
