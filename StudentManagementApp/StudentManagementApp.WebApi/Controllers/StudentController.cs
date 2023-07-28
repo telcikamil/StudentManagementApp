@@ -17,6 +17,10 @@ namespace StudentManagementApp.WebApi.Controllers
             this.studentService = studentService;
         }
 
+        /// <summary>
+        /// studentService kullanarak Studentları Profil doluluk oranına göre listeler.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("[action]")]
         public async Task<ActionResult<List<Student>>> GetAllStudents()
         {
@@ -32,6 +36,11 @@ namespace StudentManagementApp.WebApi.Controllers
         }
 
 
+        /// <summary>
+        /// studentService kullanarak öğrenci ekler ve student classındaki CalculateProfileFillRate metodunu kullanarak profil doluluk oranını hesaplar. 
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         public async Task<ActionResult<Student>> AddStudent([FromForm] Student student)
         {
@@ -52,6 +61,12 @@ namespace StudentManagementApp.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// StudentService kullanarak Girilen Id ye ait studentı getirir ve istenilen değerleri günceller 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="student"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateStudent(Guid id, [FromForm] Student student)
         {
@@ -89,6 +104,11 @@ namespace StudentManagementApp.WebApi.Controllers
         }
 
 
+        /// <summary>
+        /// StudentService kullanarak Girilen Id ye ait studentı getirir ve student ı siler.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStudent(Guid id)
         {

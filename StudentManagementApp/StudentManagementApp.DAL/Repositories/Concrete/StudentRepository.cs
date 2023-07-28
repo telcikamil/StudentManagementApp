@@ -14,6 +14,11 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
     {
         public StudentRepository(StudentManagementDbContext dbContext) : base(dbContext) { }
 
+        /// <summary>
+        /// Bütün Studentları Profil doluluk oranı En yüksek olandan en az olana doğru listeler.
+        /// </summary>
+        /// <param name="tracking"></param>
+        /// <returns></returns>
         public async Task<List<Student>> GetAllStudentAsFillRateAsync(bool tracking = true)
         {
             var query = _table.AsQueryable();

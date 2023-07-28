@@ -44,12 +44,13 @@ namespace StudentManagementApp.Model.Entities
         public ICollection<Lesson> Lessons { get; set; }
         public ICollection<Score> Scores { get; set; }
 
+        /// <summary>
+        /// Profil Doluluk oranını Hesaplar
+        /// </summary>
         public void CalculateProfileFillRate()
         {
-            // Toplam doldurulması gereken alan sayısı
             int totalRequiredFields = 10;
 
-            // Dolu olan alanların sayısını hesapla
             int filledFields = 0;
             if (!string.IsNullOrEmpty(FirstName))
                 filledFields++;
@@ -72,7 +73,6 @@ namespace StudentManagementApp.Model.Entities
             if (!string.IsNullOrEmpty(Address))
                 filledFields++;
 
-            // ProfileFillRate'i hesapla ve ayarla
             ProfileFillRate = (int)((double)filledFields / totalRequiredFields * 100);
         }
     }

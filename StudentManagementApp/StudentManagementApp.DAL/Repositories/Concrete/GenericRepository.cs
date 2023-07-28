@@ -21,6 +21,11 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
             _table = _context.Set<T>();
 
         }
+        /// <summary>
+        /// Entity ekler.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public async Task<T> AddAsync(T entity)
         {
             var entry = await _table.AddAsync(entity);
@@ -30,6 +35,11 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
         }
 
 
+        /// <summary>
+        /// Entity Siler.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public async Task DeleteAsync(T entity)
         {
             _table.Remove(entity);
@@ -38,6 +48,11 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
 
 
 
+        /// <summary>
+        /// Entityleri listeler.
+        /// </summary>
+        /// <param name="tracking"></param>
+        /// <returns></returns>
         public async Task<List<T>> GetAllAsync(bool tracking = true)
         {
             var query = _table.AsQueryable();
@@ -45,6 +60,12 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// Id si girilen entiti yi getirir.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="tracking"></param>
+        /// <returns></returns>
         public async Task<T?> GetByIdAsync(Guid id, bool tracking = true)
         {
             var query = _table.AsQueryable();
@@ -52,6 +73,11 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
             return await query.FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
+        /// <summary>
+        /// Id si girilen entitinin istenen değerlerini günceller
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public async Task<T> UpdateAsync(T entity)
         {
             var updatedEntity = _table.Update(entity).Entity;
