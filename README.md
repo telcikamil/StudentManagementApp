@@ -1,13 +1,13 @@
 Öğrenci Kayıt Yönetimi
 Öğrenci Kayıt Yönetiminde öğrenci bilgileri, dersler ve başarı notları tutulur öğrenci ekleme, silme, güncelleme ve listeleme işlemleri yapılabilir.
 
-Kullanılan Teknolojiler
+Kullanılan Teknolojiler:
 -SQL-Lite
 -.Net Core 7.0
 -Ef Core Code First
 
 Kullanılan mimari
- N-Tier Architecture kullanılarak proje 4 katmanda oluşturuldu.
+ N-Tier Architecture kullanılarak proje 4 katmanda oluşturuldu:
  -Business Logic Layer Katmanında Serviceler.(Projenin ilerki aşamalarında mapper kullanılabilmesi için temel oluşturuldu)
  -Data Access Layer Katmanında DbContext ve Repositoriler
  -Model katmanında Entitiler
