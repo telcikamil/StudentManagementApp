@@ -21,62 +21,68 @@ namespace StudentManagementApp.BLL.Services.Concrete
         }
 
         /// <summary>
-        /// Yeni Student Ekler.
+        /// Yeni bir öğrenci ekler.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Eklenmek istenen öğrenci nesnesi.</param>
+        /// <returns>Eklenen öğrenci nesnesi.</returns>
         public async Task<Student> AddAsync(Student entity)
         {
+            // Öğrenci profili doldurma oranını hesaplar.
             entity.CalculateProfileFillRate();
 
+            // Öğrenciyi veritabanına ekler ve eklenen öğrenci nesnesini döndürür.
             return await _studentRepository.AddAsync(entity);
         }
 
         /// <summary>
-        /// Id si girilen Student'ı siler.
+        /// Belirtilen Kimliğe sahip öğrenciyi siler.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Silinmek istenen öğrenci nesnesi.</param>
         public async Task DeleteAsync(Student entity)
         {
+            // Öğrenciyi veritabanından siler.
             await _studentRepository.DeleteAsync(entity);
         }
 
         /// <summary>
-        /// Bütün Studentları listeler.
+        /// Tüm öğrencileri listeler.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Tüm öğrenci listesi.</returns>
         public async Task<List<Student>> GetAllAsync()
         {
+            // Tüm öğrencileri veritabanından çeker ve listeyi döndürür.
             return await _studentRepository.GetAllAsync();
         }
 
         /// <summary>
-        /// Bütün Studentları Profil doluluk oranı En yüksek olandan en az olana doğru listeler.
+        /// Profil doluluk oranına göre en yüksekten en düşüğe doğru sıralanmış tüm öğrencileri listeler.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Profil doluluk oranına göre sıralanmış öğrenci listesi.</returns>
         public async Task<List<Student>> GetAllStudentAsFillRate()
         {
+            // Öğrencileri profillerine göre sıralayarak listeyi döndürür.
             return await _studentRepository.GetAllStudentAsFillRateAsync();
         }
 
         /// <summary>
-        /// Id'si verilen Studentı getirir.
+        /// Kimliği verilen öğrenciyi getirir.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Getirilmek istenen öğrenci kimliği.</param>
+        /// <returns>Belirtilen kimliğe sahip öğrenci.</returns>
         public async Task<Student> GetByIdAsync(Guid id)
         {
+            // Verilen kimliğe sahip öğrenciyi veritabanından çeker ve nesneyi döndürür.
             return await _studentRepository.GetByIdAsync(id);
         }
 
         /// <summary>
-        /// Id'si verilen studentın istenen değerlerini günceller.
+        /// Kimliği verilen öğrencinin istenen değerlerini günceller.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Güncellenmiş öğrenci nesnesi.</param>
+        /// <returns>Güncellenmiş öğrenci nesnesi.</returns>
         public async Task<Student> UpdateAsync(Student entity)
         {
+            // Öğrenciyi günceller ve güncellenen öğrenci nesnesini döndürür.
             return await _studentRepository.UpdateAsync(entity);
         }
     }

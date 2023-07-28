@@ -18,9 +18,9 @@ namespace StudentManagementApp.WebApi.Controllers
         }
 
         /// <summary>
-        /// studentService kullanarak Studentları Profil doluluk oranına göre listeler.
+        /// Studentları, Profil doluluk oranına göre listeler.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Profil doluluk oranına göre sıralanmış öğrenci listesi.</returns>
         [HttpGet("[action]")]
         public async Task<ActionResult<List<Student>>> GetAllStudents()
         {
@@ -35,12 +35,11 @@ namespace StudentManagementApp.WebApi.Controllers
             }
         }
 
-
         /// <summary>
-        /// studentService kullanarak öğrenci ekler ve student classındaki CalculateProfileFillRate metodunu kullanarak profil doluluk oranını hesaplar. 
+        /// Yeni bir öğrenci ekler ve profil doluluk oranını hesaplar.
         /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
+        /// <param name="student">Eklenecek öğrenci nesnesi.</param>
+        /// <returns>Eklendiğinde geri dönen öğrenci nesnesi.</returns>
         [HttpPost("[action]")]
         public async Task<ActionResult<Student>> AddStudent([FromForm] Student student)
         {
@@ -62,10 +61,10 @@ namespace StudentManagementApp.WebApi.Controllers
         }
 
         /// <summary>
-        /// StudentService kullanarak Girilen Id ye ait studentı getirir ve istenilen değerleri günceller 
+        /// Belirtilen Id'ye ait öğrenciyi getirir ve istenilen değerleri günceller.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="student"></param>
+        /// <param name="id">Güncellenecek öğrenci kimliği.</param>
+        /// <param name="student">Güncellenmiş öğrenci nesnesi.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateStudent(Guid id, [FromForm] Student student)
@@ -90,7 +89,6 @@ namespace StudentManagementApp.WebApi.Controllers
                 existingStudent.PhoneNumber = student.PhoneNumber;
                 existingStudent.Address = student.Address;
                 existingStudent.RegistrationDate = student.RegistrationDate;
-                existingStudent.BirthDate = student.BirthDate;
                 existingStudent.CalculateProfileFillRate();
 
                 await studentService.UpdateAsync(existingStudent);
@@ -103,11 +101,10 @@ namespace StudentManagementApp.WebApi.Controllers
             }
         }
 
-
         /// <summary>
-        /// StudentService kullanarak Girilen Id ye ait studentı getirir ve student ı siler.
+        /// Belirtilen Id'ye ait öğrenciyi siler.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Silinecek öğrenci kimliği.</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStudent(Guid id)
@@ -126,5 +123,6 @@ namespace StudentManagementApp.WebApi.Controllers
                 return StatusCode(500, "Öğrenci silinirken bir hata oluştu.");
             }
         }
+
     }
 }

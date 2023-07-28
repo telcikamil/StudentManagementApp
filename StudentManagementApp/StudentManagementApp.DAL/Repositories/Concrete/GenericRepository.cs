@@ -22,10 +22,10 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
 
         }
         /// <summary>
-        /// Entity ekler.
+        /// Yeni bir entity ekler.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Eklenecek entity nesnesi.</param>
+        /// <returns>Eklendiğinde geri dönen entity nesnesi.</returns>
         public async Task<T> AddAsync(T entity)
         {
             var entry = await _table.AddAsync(entity);
@@ -34,25 +34,21 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
             return entry.Entity;
         }
 
-
         /// <summary>
-        /// Entity Siler.
+        /// Belirtilen entity'i siler.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Silinecek entity nesnesi.</param>
         public async Task DeleteAsync(T entity)
         {
             _table.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-
-
         /// <summary>
-        /// Entityleri listeler.
+        /// Tüm entity'leri listeler.
         /// </summary>
-        /// <param name="tracking"></param>
-        /// <returns></returns>
+        /// <param name="tracking">True ise takip eder, False ise takip etmez.</param>
+        /// <returns>Tüm entity listesi.</returns>
         public async Task<List<T>> GetAllAsync(bool tracking = true)
         {
             var query = _table.AsQueryable();
@@ -61,11 +57,11 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
         }
 
         /// <summary>
-        /// Id si girilen entiti yi getirir.
+        /// Belirtilen Id'ye sahip entity'yi getirir.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="tracking"></param>
-        /// <returns></returns>
+        /// <param name="id">Getirilecek entity'nin kimliği.</param>
+        /// <param name="tracking">True ise takip eder, False ise takip etmez.</param>
+        /// <returns>Belirtilen Id'ye sahip entity veya null.</returns>
         public async Task<T?> GetByIdAsync(Guid id, bool tracking = true)
         {
             var query = _table.AsQueryable();
@@ -74,10 +70,10 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
         }
 
         /// <summary>
-        /// Id si girilen entitinin istenen değerlerini günceller
+        /// Belirtilen Id'ye sahip entity'nin istenen değerlerini günceller.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Güncellenecek entity nesnesi.</param>
+        /// <returns>Güncellenen entity nesnesi.</returns>
         public async Task<T> UpdateAsync(T entity)
         {
             var updatedEntity = _table.Update(entity).Entity;
@@ -85,5 +81,6 @@ namespace StudentManagementApp.DAL.Repositories.Concrete
 
             return updatedEntity;
         }
+
     }
 }
