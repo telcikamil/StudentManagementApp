@@ -4,17 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentManagementApp.Model.Entities
+namespace StudentManagementApp.Dtos.Students
 {
-    public class Student : BaseEntity
+    public class StudentDto
     {
-
-        public Student()
-        {
-            Lessons = new HashSet<Lesson>();
-            Scores = new HashSet<Score>();
-        }
-
+        public Guid? Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? IdentityNumber { get; set; }
@@ -40,10 +34,6 @@ namespace StudentManagementApp.Model.Entities
                     profileFillRate = value;
             }
         }
-
-        public ICollection<Lesson> Lessons { get; set; }
-        public ICollection<Score> Scores { get; set; }
-
         public void CalculateProfileFillRate()
         {
             // Toplam doldurulması gereken alan sayısı
@@ -75,5 +65,6 @@ namespace StudentManagementApp.Model.Entities
             // ProfileFillRate'i hesapla ve ayarla
             ProfileFillRate = (int)((double)filledFields / totalRequiredFields * 100);
         }
+
     }
 }

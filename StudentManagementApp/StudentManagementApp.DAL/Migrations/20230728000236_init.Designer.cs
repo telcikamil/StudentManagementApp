@@ -12,7 +12,7 @@ using StudentManagementApp.DAL.Context;
 namespace StudentManagementApp.DAL.Migrations
 {
     [DbContext(typeof(StudentManagementDbContext))]
-    [Migration("20230727203650_init")]
+    [Migration("20230728000236_init")]
     partial class init
     {
         /// <inheritdoc />

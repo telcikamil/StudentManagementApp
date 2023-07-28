@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagementApp.BLL.Services.Abstract;
 using StudentManagementApp.DAL.Repositories.Abstract;
 using StudentManagementApp.Model.Entities;
 
@@ -8,20 +9,20 @@ namespace StudentManagementApp.WebApi.Controllers
     [Route("[controller]")]
     public class StudentController : Controller
     {
-        
-        private readonly IStudentRepository studentRepository;
+       
+        private readonly IStudentService studentService;
 
-        public StudentController(IStudentRepository studentRepository)
+        public StudentController(IStudentService studentService)
         {
-            this.studentRepository = studentRepository;
+            this.studentService = studentService;
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         public async Task<ActionResult<List<Student>>> GetAllStudents()
         {
             try
             {
-                var students = await studentRepository.GetAllAsync();
+                var students = await studentService.GetAllStudentAsFillRate();
                 return Ok(students);
             }
             catch (Exception ex)
@@ -30,25 +31,8 @@ namespace StudentManagementApp.WebApi.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudentById(Guid id)
-        {
-            try
-            {
-                var student = await studentRepository.GetByIdAsync(id);
 
-                if (student == null)
-                    return NotFound();
-
-                return Ok(student);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Öğrenci alınırken bir hata oluştu.");
-            }
-        }
-
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<ActionResult<Student>> AddStudent([FromForm] Student student)
         {
             try
@@ -56,24 +40,17 @@ namespace StudentManagementApp.WebApi.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest("Geçersiz veri.");
 
-                // CalculateProfileFillRate metodunu burada çağır
                 student.CalculateProfileFillRate();
 
-                var addedStudent = await studentRepository.AddAsync(student);
+                var addedStudent = await studentService.AddAsync(student);
 
-                // Öğrencinin güncellenmiş ProfileFillRate değerini veritabanına kaydet
-                await studentRepository.UpdateAsync(addedStudent);
-
-                return CreatedAtAction(nameof(GetStudentById), new { id = addedStudent.Id }, addedStudent);
+                return addedStudent;
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Öğrenci eklenirken bir hata oluştu.");
             }
         }
-
-
-
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateStudent(Guid id, [FromForm] Student student)
@@ -86,11 +63,10 @@ namespace StudentManagementApp.WebApi.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest("Geçersiz veri.");
 
-                var existingStudent = await studentRepository.GetByIdAsync(id);
+                var existingStudent = await studentService.GetByIdAsync(id);
                 if (existingStudent == null)
                     return NotFound();
 
-                // Güncelleme işlemleri yapılacak
                 existingStudent.FirstName = student.FirstName;
                 existingStudent.LastName = student.LastName;
                 existingStudent.IdentityNumber = student.IdentityNumber;
@@ -99,11 +75,10 @@ namespace StudentManagementApp.WebApi.Controllers
                 existingStudent.PhoneNumber = student.PhoneNumber;
                 existingStudent.Address = student.Address;
                 existingStudent.RegistrationDate = student.RegistrationDate;
-                existingStudent.Lessons = student.Lessons;
                 existingStudent.BirthDate = student.BirthDate;
                 existingStudent.CalculateProfileFillRate();
 
-                await studentRepository.UpdateAsync(existingStudent); // Veritabanında güncelle
+                await studentService.UpdateAsync(existingStudent);
 
                 return NoContent();
             }
@@ -119,11 +94,11 @@ namespace StudentManagementApp.WebApi.Controllers
         {
             try
             {
-                var existingStudent = await studentRepository.GetByIdAsync(id);
+                var existingStudent = await studentService.GetByIdAsync(id);
                 if (existingStudent == null)
                     return NotFound();
 
-                await studentRepository.DeleteAsync(existingStudent);
+                await studentService.DeleteAsync(existingStudent);
                 return NoContent();
             }
             catch (Exception ex)
